@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* #main{
+            border: 1px solid white;
+            width: 70%;
+            height: 500px;
+        } */
+        #movie3{
+            
+            /* display: grid;
+            grid-template-columns: auto auto auto;
+             grid-gap:2%; 
+         */
+        }
+        img{
+            width: 10%;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" id="movie" placeholder="moviename"/>
+    <button onclick="moviesearch()">submit</button>
+<div id="main">
+   <div id="movie3"></div>
+   </div>
+
+</body>
+</html>
+<script>
+  async function moviesearch(){
+     
+          let movies = document.getElementById("movie").value;
+        let response = await fetch(`http://www.omdbapi.com/?t=${movies}&apikey=760cc624`);
+  let data = await response.json();
+ 
+  console.log("data:" , data);
+  var movie3 = document.getElementById("movie3");
+  if(data.Title){
+    let img1 = document.createElement("img");
+      img1.src = data.Poster;
+
+    
+      movie3.appendChild(img1);
+   
+    var datavalue = data.Title;
+    var released = data.Released;
+    var Rating = data.Rating;
+    if(Rating > 8.5){
+        var mov2 = document.createElement("p"); 
+        mov2.innerHTML = "good Rating";
+        movie3.appendChild(mov2); 
+    }
+    else{
+        var mov2 = document.createElement("p"); 
+        mov2.innerHTML = "Bad Rating";
+        movie3.appendChild(mov2); 
+    }
+    
+        var mov = document.createElement("p");
+        var mov1 = document.createElement("p");
+        mov.innerHTML = datavalue;
+        mov1.innerHTML = released;
+        movie3.appendChild(mov);
+        movie3.appendChild(mov1);
+    
+}
+else{
+    alert("movie not found");
+}
+
+  }
+moviesearch();
+  
+
+    
+  
+    
+
+</script>
